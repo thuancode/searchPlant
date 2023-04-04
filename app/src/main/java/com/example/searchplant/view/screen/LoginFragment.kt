@@ -66,15 +66,9 @@ class LoginFragment : Fragment() {
     private fun checkbox() {
         val sharedPref = requireActivity().getSharedPreferences("remember", Context.MODE_PRIVATE)
         val checkbox = sharedPref.getString("remember","")
-        val emailCheck = binding.edtEmail.text.toString().trim()
-        val passCheck = binding.edtPass.text.toString().trim()
-
         if(checkbox.equals("true"))
         {
-                if(emailCheck != "" ||passCheck != "")
-                {
-                    findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
-                }
+            findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
         }else if(checkbox.equals("false"))
         {
             Toast.makeText(activity,"Vui lòng đăng nhập",Toast.LENGTH_SHORT).show()
