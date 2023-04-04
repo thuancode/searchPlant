@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">searchPlant</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="home">HOME</string>
+    <string name="profile">PROFILE</string>
+    <string name="todo">TODO</string>
+    <string name="hi">Hi</string>
+    <string name="textview">Textview</string>
+    <string name="image">image</string>
+    <string name="HELLO">TextView</string>
+    <string name="identyfine">IDENTYFINE</string>
+    <string name="identify">IDENTIFY</string>
+    <string name="articles">ARTICLES</string>
+    <string name="species">SPECIES</string>
+    <string name="plant_types">Plant Types</string>
+    <string name="textview1">TextView</string>
+    <string name="a">A</string>
+    <string name="signup">SignUp</string>
+    <string name="username">Username</string>
+    <string name="register_new_account">Register new account</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="sign_up">SIGN UP</string>
+</resources>

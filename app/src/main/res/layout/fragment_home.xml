@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        tools:context=".view.screen.HomeFragment">
+
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="ExtraText">
+
+            <androidx.core.widget.NestedScrollView
+                android:id="@+id/NestView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#EAE7E7"
+                android:contentDescription="@string/textview"
+                android:fillViewport="true">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="413dp"
+                        android:layout_height="223dp">
+
+                        <ImageView
+                            android:id="@+id/imageView10"
+                            android:layout_width="411dp"
+                            android:layout_height="168dp"
+                            android:contentDescription="@string/home"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.5"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:srcCompat="@drawable/background_home_1" />
+
+                        <TextView
+                            android:id="@+id/textView7"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="22dp"
+                            android:layout_marginTop="60dp"
+                            android:text="HELLO NAME ,"
+                            android:textColor="@color/white"
+                            android:textSize="21sp"
+                            android:textStyle="bold"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            tools:ignore="HardcodedText,MissingConstraints" />
+
+                        <TextView
+                            android:id="@+id/textView8"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="23dp"
+                            android:layout_marginTop="8dp"
+                            android:text="Let’s Learn More About Plants"
+                            android:textColor="@color/white"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/textView7"
+                            tools:ignore="HardcodedText,MissingConstraints" />
+
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="24dp"
+                            android:src="@mipmap/ic_launcher"
+                            app:layout_constraintBottom_toBottomOf="@+id/textView8"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="@+id/textView7">
+
+                        </de.hdodenhof.circleimageview.CircleImageView>
+
+                        <EditText
+                            android:id="@+id/editTextTextPersonName"
+                            android:layout_width="373dp"
+                            android:layout_height="51dp"
+                            android:layout_marginStart="32dp"
+                            android:layout_marginEnd="32dp"
+                            android:background="@drawable/backgroud_search"
+                            android:drawableStart="@android:drawable/ic_menu_search"
+                            android:drawablePadding="10dp"
+                            android:ems="10"
+                            android:hint="Search For Plants"
+                            android:inputType="textPersonName"
+                            android:paddingStart="10dp"
+                            android:textColorHint="#D2D2D2"
+                            android:textSize="14sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintVertical_bias="0.796"
+                            tools:ignore="HardcodedText,RtlSymmetry" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="102dp"
+                        android:orientation="horizontal">
+
+                        <Button
+                            android:id="@+id/btn_iden"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_marginStart="23dp"
+                            android:layout_weight="1"
+                            android:backgroundTint="@color/back_btn_chose"
+                            android:drawableTop="@drawable/camera"
+                            android:drawableTint="@color/background_icon"
+                            android:paddingTop="20dp"
+                            android:text="@string/identify"
+                            android:textColor="@color/background_text_btn"
+                            android:textSize="10sp"
+                            tools:ignore="SmallSp" />
+
+                        <Button
+                            android:id="@+id/btn_spe"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_marginStart="23dp"
+                            android:layout_weight="1"
+                            android:backgroundTint="@color/back_btn_chose"
+                            android:drawableTop="@drawable/la"
+                            android:drawableTint="@color/background_icon"
+                            android:paddingTop="20dp"
+                            android:text="@string/species"
+                            android:textColor="@color/background_text_btn"
+                            android:textSize="10sp"
+                            tools:ignore="SmallSp" />
+
+                        <Button
+                            android:id="@+id/btn_art"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_marginStart="23dp"
+                            android:layout_marginEnd="23dp"
+                            android:layout_weight="1"
+                            android:backgroundTint="@color/back_btn_chose"
+                            android:drawableTop="@drawable/article"
+                            android:drawableTint="@color/background_icon"
+                            android:paddingTop="20dp"
+                            android:text="@string/articles"
+                            android:textColor="@color/background_text_btn"
+                            android:textSize="10sp"
+                            tools:ignore="SmallSp" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/textView9"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="23dp"
+                        android:layout_marginTop="24dp"
+                        android:text="@string/plant_types"
+                        android:textColor="#36455A"
+                        android:textSize="17sp"
+                        android:textStyle="bold"
+                        tools:ignore="HardcodedText" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/list_Plant"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp" />
+
+                    <TextView
+                        android:id="@+id/textView10"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="23dp"
+                        android:layout_marginTop="24dp"
+                        android:text="Photography"
+                        android:textColor="#36455A"
+                        android:textSize="17sp"
+                        android:textStyle="bold"
+                        tools:ignore="HardcodedText" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/list_Photo"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="15dp" />
+                </LinearLayout>
+            </androidx.core.widget.NestedScrollView>
+
+
+            <com.google.android.material.bottomappbar.BottomAppBar
+                android:id="@+id/bottomAppBar4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:background="@color/white"
+                app:fabCradleMargin="8dp"
+                app:fabCradleRoundedCornerRadius="50dp"
+                app:fabCradleVerticalOffset="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:ignore="BottomAppBar,MissingConstraints">
+
+                <com.google.android.material.bottomnavigation.BottomNavigationView
+                    android:id="@+id/bottomNavigationView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="20dp"
+                    android:background="@android:color/transparent"
+                    android:backgroundTint="@color/white"
+                    app:itemIconTint="@color/background_btn"
+                    app:itemTextColor="@color/background_btn"
+                    app:labelVisibilityMode="labeled"
+                    app:menu="@menu/bottom_navigation_menu" />
+
+            </com.google.android.material.bottomappbar.BottomAppBar>
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/btnAdd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#48A2F5"
+                android:clickable="true"
+                android:contentDescription="@string/todo"
+                android:focusable="true"
+                android:src="@drawable/baseline_add_24"
+                app:layout_anchor="@id/bottomAppBar4"
+                app:maxImageSize="40dp"
+                app:rippleColor="@color/white" />
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

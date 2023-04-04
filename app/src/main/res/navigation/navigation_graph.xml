@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_graph"
+    app:startDestination="@id/splashFragment">
+
+    <fragment
+        android:id="@+id/splashFragment"
+        android:name="com.example.searchplant.view.SplashFragment"
+        android:label="SplashFragment"
+        tools:layout="@layout/fragment_splash">
+        <action
+            android:id="@+id/action_splashFragment_to_viewPagerFragment"
+            app:destination="@id/viewPagerFragment"
+            app:popUpTo="@id/splashFragment"
+            app:popUpToInclusive="true"/>
+        <action
+            android:id="@+id/action_splashFragment_to_loginFragment"
+            app:destination="@id/loginFragment"
+            app:popUpTo="@id/splashFragment"
+            app:popUpToInclusive="true" />
+
+    </fragment>
+    <fragment
+        android:id="@+id/viewPagerFragment"
+        android:name="com.example.searchplant.view.ViewPagerFragment"
+        android:label="ViewPagerFragment"
+        tools:layout="@layout/fragment_view_pager">
+        <action
+            android:id="@+id/action_viewPagerFragment_to_loginFragment"
+            app:destination="@id/loginFragment"
+            app:popUpTo="@id/viewPagerFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.example.searchplant.view.screen.LoginFragment"
+        android:label="LoginFragment"
+        tools:layout="@layout/fragment_login">
+        <action
+            android:id="@+id/action_loginFragment_to_signUpFragment"
+            app:destination="@id/signUpFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_forgetFragment"
+            app:destination="@id/forgetFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_homeFragment"
+            app:destination="@id/homeFragment"
+            app:popUpTo="@id/loginFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/signUpFragment"
+        android:name="com.example.searchplant.view.screen.SignUpFragment"
+        android:label="SignUpFragment"
+        tools:layout="@layout/fragment_sign_up">
+        <action
+            android:id="@+id/action_signUpFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/forgetFragment"
+        android:name="com.example.searchplant.view.screen.ForgetFragment"
+        android:label="ForgetFragment"
+        tools:layout="@layout/fragment_forget"/>
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.example.searchplant.view.screen.HomeFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_homeFragment_self"
+            app:destination="@id/homeFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_speciesFragment"
+            app:destination="@id/speciesFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/speciesFragment"
+        android:name="com.example.searchplant.view.screen.SpeciesFragment"
+        android:label="SpeciesFragment"
+        tools:layout="@layout/fragment_species">
+        <action
+            android:id="@+id/action_speciesFragment_to_homeFragment"
+            app:destination="@id/homeFragment"
+            app:popUpTo="@id/speciesFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_speciesFragment_to_listSpeciesFragment"
+            app:destination="@id/listSpeciesFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/listSpeciesFragment"
+        android:name="com.example.searchplant.view.screen.ListSpeciesFragment"
+        android:label="ListSpeciesFragment"
+        tools:layout="@layout/fragment_list_species">
+        <action
+            android:id="@+id/action_listSpeciesFragment_to_speciesFragment"
+            app:destination="@id/speciesFragment"
+            app:popUpTo="@id/listSpeciesFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_listSpeciesFragment_to_homeFragment"
+            app:destination="@id/homeFragment"
+            app:popUpTo="@id/listSpeciesFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+</navigation>
