@@ -26,4 +26,9 @@
         <item name="android:statusBarColor">#DFD3D3</item>
         <!-- Customize your theme here. -->
     </style>
+    <style name="RoundCorner" parent="">
+            <item name="cornerFamily">rounded</item>
+            <item name="cornerSize">20dp</item>
+            <item name="color">@color/white</item>
+    </style>
 </resources>

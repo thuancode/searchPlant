@@ -12,6 +12,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.searchplant.R
 import com.example.searchplant.databinding.FragmentLoginBinding
 import com.example.searchplant.databinding.FragmentSignUpBinding
+import com.example.searchplant.model.User
 import com.example.searchplant.viewmodel.LoginViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
@@ -23,7 +24,7 @@ class SignUpFragment : Fragment() {
     lateinit var binding : FragmentSignUpBinding
     private lateinit var  viewModel : LoginViewModel
     private lateinit var auth: FirebaseAuth
-    private lateinit var db: FirebaseFirestore
+    private lateinit var db : FirebaseFirestore
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -71,42 +72,52 @@ class SignUpFragment : Fragment() {
                 val email = binding.edtEmail.text.toString().trim()
                 val password = binding.edtPass.text.toString().trim()
                 val pHone = binding.edtPhone.text.toString().trim()
-                val fullName = binding.edtFullName.toString().trim()
-                createAccount(email,password,fullName,pHone)
+                val fullName = binding.edtFullName.text.toString().trim()
+                val address = binding.edtAddress.text.toString().trim()
+                createAccount(email,password,fullName,pHone,address)
             }
         }
         return
     }
 
-    private fun createAccount(eMail:String, passWord:String, fullName: String, pHone:String)
+    private fun createAccount(eMail:String, passWord:String, fullName: String, pHone:String,Address:String)
     {
-        val user = hashMapOf("Name" to fullName,
-            "Email" to eMail,
-            "Phone" to pHone,
-            "Password" to passWord)
+        val listLike:ArrayList<String> = arrayListOf()
+        val listLikeArt:ArrayList<String> = arrayListOf()
+        val listSave:ArrayList<String> = arrayListOf()
 
-        val uSer = db.collection("USER")
-        val query = uSer.whereEqualTo("Email",eMail).get().addOnSuccessListener { task->
+        val user = User(null,eMail,fullName, pHone, passWord,Address,listLike,listLikeArt,listSave)
+
+        db.collection("USER").whereEqualTo("email",eMail).get().addOnSuccessListener { task->
             if(task.isEmpty)
             {
                 auth.createUserWithEmailAndPassword(eMail, passWord)
-                    .addOnCompleteListener(requireActivity()){ task ->
-                        if (task.isSuccessful) {
+                    .addOnCompleteListener(requireActivity()){ it ->
+                        if (it.isSuccessful) {
                             auth.currentUser?.sendEmailVerification()
                                 ?.addOnSuccessListener {
-                                    uSer.document(eMail).set(user)
-                                    Toast.makeText(activity, "Xác nhận Email đăng ký", Toast.LENGTH_SHORT).show()
-                                    findNavController().navigate(R.id.action_signUpFragment_to_loginFragment)
+                                    db.collection("USER")
+                                        .add(user)
+                                        .addOnSuccessListener{
+                                            val postID = it.id
+                                            db.collection("USER")
+                                                .document(postID)
+                                                .update("postID", postID)
+                                                .addOnSuccessListener {
+                                                    Toast.makeText(activity, "Xác nhận Email đăng ký", Toast.LENGTH_SHORT).show()
+                                                    findNavController().navigate(R.id.action_signUpFragment_to_loginFragment)
+                                                }
+                                        }
                                 }
                                 ?.addOnFailureListener {
                                     Toast.makeText(activity, it.toString(), Toast.LENGTH_SHORT).show()
                                 }
                         }
                     }
-            }
-            else
-            {
-                Toast.makeText(activity, "Gmail này đã tồn tại", Toast.LENGTH_SHORT).show()
+                    .addOnFailureListener {
+                        Toast.makeText(activity, "Gmail này đã tồn tại", Toast.LENGTH_SHORT).show()
+
+                    }
             }
         }
 

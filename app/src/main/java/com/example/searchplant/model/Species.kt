@@ -1,17 +1,34 @@
 package com.example.searchplant.model
 
-import com.google.firebase.firestore.auth.User
+import android.graphics.Bitmap
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
 
-data class Species(private var namePlant:String ?= null,
+@Parcelize
+data class Species(private var postID:String ?= null,
+                   private var namePlant:String ?= null,
                    private var species: String?= null,
                    private var kingdom:String ?= null,
                    private var Family:String ?= null,
                    private var Description:String ?= null,
-                   private var like:Boolean ?= null,
                    private var properties:String ?= null,
                    private var type:String ?= null,
-) {
+                   private var image:Bitmap ?=null
+): Parcelable {
+    fun setPostID(post: String)
+    {
+        this.postID = post
+    }
+    fun getPostID(): String? {
+        return this.postID
+    }
+    fun getImagePlant(): Bitmap? {
+        return this.image
+    }
 
+    fun setImagePlant(image: Bitmap?) {
+        this.image = image
+    }
     fun getNamePlant(): String? {
         return this.namePlant
     }
@@ -33,8 +50,8 @@ data class Species(private var namePlant:String ?= null,
         return this.kingdom
     }
 
-    fun setKingDom(kingDom1: String) {
-        this.kingdom = kingDom1
+    fun setKingDom(kingdom1: String) {
+        this.kingdom = kingdom1
     }
 
     fun getFamily(): String? {
@@ -51,13 +68,6 @@ data class Species(private var namePlant:String ?= null,
 
     fun setDescription(description1: String) {
         this.Description = description1
-    }
-    fun getLike(): Boolean? {
-        return this.like
-    }
-
-    fun setLike(like1: Boolean) {
-        this.like = like1
     }
     fun getProperties(): String? {
         return this.properties

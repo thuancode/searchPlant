@@ -9,18 +9,6 @@ import com.google.firebase.ktx.Firebase
 
 class serviceSpecies() : interfaceSpecies {
     lateinit var binding: FragmentSpeciesBinding
-    //    override fun addSpecies(context:Context){
-//        val list : ArrayList<Species> = ArrayList()
-//        val collection = db.collection("SPECIES")
-//        collection.get().addOnSuccessListener {
-//            for(document in it)
-//            {
-//                val myData = document.toObject(Species::class.java)
-//                Log.d(TAG, "---------------------$myData")
-//                list.add(myData)
-//            }
-//        }
-//    }
     override fun sortSpecies(sPec: ArrayList<Species>): ArrayList<Species>{
         val list = sPec.distinctBy { it.getSpecies() } as ArrayList<Species>
         val listSort = list.sortedBy { it.getSpecies() }

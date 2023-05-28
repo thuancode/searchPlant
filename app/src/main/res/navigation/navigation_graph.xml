@@ -75,6 +75,12 @@
         <action
             android:id="@+id/action_homeFragment_to_speciesFragment"
             app:destination="@id/speciesFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_addNewPlantFragment"
+            app:destination="@id/addNewPlantFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
     </fragment>
     <fragment
         android:id="@+id/speciesFragment"
@@ -89,6 +95,14 @@
         <action
             android:id="@+id/action_speciesFragment_to_listSpeciesFragment"
             app:destination="@id/listSpeciesFragment" />
+        <action
+            android:id="@+id/action_speciesFragment_to_profileFragment"
+            app:destination="@id/profileFragment"
+            app:popUpTo="@id/speciesFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_speciesFragment_to_addNewPlantFragment"
+            app:destination="@id/addNewPlantFragment" />
     </fragment>
     <fragment
         android:id="@+id/listSpeciesFragment"
@@ -105,6 +119,72 @@
             app:destination="@id/homeFragment"
             app:popUpTo="@id/listSpeciesFragment"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_listSpeciesFragment_to_detailPlantFragment"
+            app:destination="@id/detailPlantFragment" />
+        <action
+            android:id="@+id/action_listSpeciesFragment_to_profileFragment"
+            app:destination="@id/profileFragment"
+            app:popUpTo="@id/listSpeciesFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_listSpeciesFragment_to_addNewPlantFragment"
+            app:destination="@id/addNewPlantFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/detailPlantFragment"
+        android:name="com.example.searchplant.view.screen.DetailPlantFragment"
+        android:label="DetailPlantFragment"
+        tools:layout="@layout/fragment_detail_plant">
+        <action
+            android:id="@+id/action_detailPlantFragment_to_homeFragment"
+            app:destination="@id/homeFragment"
+            app:popUpTo="@id/detailPlantFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_detailPlantFragment_to_profileFragment"
+            app:destination="@id/profileFragment"
+            app:popUpTo="@id/detailPlantFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_detailPlantFragment_to_addNewPlantFragment"
+            app:destination="@id/addNewPlantFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addNewPlantFragment"
+        android:name="com.example.searchplant.view.screen.AddNewPlantFragment"
+        android:label="AddNewPlantFragment"
+        tools:layout="@layout/fragment_add_new_plant"/>
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.example.searchplant.view.screen.ProfileFragment"
+        android:label="ProfileFragment"
+        tools:layout="@layout/fragment_profile">
+        <action
+            android:id="@+id/action_profileFragment_self"
+            app:destination="@id/profileFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_homeFragment"
+            app:destination="@id/homeFragment"
+            app:popUpTo="@id/profileFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_profileFragment_to_addNewPlantFragment"
+            app:destination="@id/addNewPlantFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_detailPlantFragment"
+            app:destination="@id/detailPlantFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_speciesProfileFragment2"
+            app:destination="@id/speciesProfileFragment2" />
+    </fragment>
+    <fragment
+        android:id="@+id/speciesProfileFragment2"
+        android:name="com.example.searchplant.view.screen.SpeciesProfileFragment"
+        android:label="SpeciesProfileFragment" >
+        <action
+            android:id="@+id/action_speciesProfileFragment2_to_profileFragment"
+            app:destination="@id/profileFragment" />
     </fragment>
 
 </navigation>

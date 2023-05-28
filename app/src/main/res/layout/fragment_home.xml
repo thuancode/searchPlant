@@ -43,7 +43,6 @@
                             android:layout_height="168dp"
                             android:contentDescription="@string/home"
                             app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintHorizontal_bias="0.5"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
                             app:srcCompat="@drawable/background_home_1" />
@@ -77,8 +76,9 @@
                             tools:ignore="HardcodedText,MissingConstraints" />
 
                         <de.hdodenhof.circleimageview.CircleImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:id="@+id/imageAvatar"
+                            android:layout_width="80dp"
+                            android:layout_height="70dp"
                             android:layout_marginEnd="24dp"
                             android:src="@mipmap/ic_launcher"
                             app:layout_constraintBottom_toBottomOf="@+id/textView8"
@@ -174,12 +174,20 @@
                         android:textSize="17sp"
                         android:textStyle="bold"
                         tools:ignore="HardcodedText" />
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/list_Plant"
+                                android:orientation="horizontal"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="15dp"
+                                tools:ignore="NestedScrolling">
+                            </androidx.recyclerview.widget.RecyclerView>
+                        </LinearLayout>
 
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/list_Plant"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="15dp" />
 
                     <TextView
                         android:id="@+id/textView10"

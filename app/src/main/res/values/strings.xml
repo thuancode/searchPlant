@@ -22,4 +22,32 @@
     <string name="email">Email</string>
     <string name="password">Password</string>
     <string name="sign_up">SIGN UP</string>
+    <string name="buttonheart">buttonHeart</string>
+    <string name="type">Type:</string>
+    <string name="x_c_nh_n">Xác nhận</string>
+    <string name="Type">type</string>
+    <string name="hoa_hong">Hoa Hong</string>
+    <string name="trung_bay">Trung bay</string>
+    <string name="family">Family</string>
+    <string name="kigdom">kigdom</string>
+    <string name="speciess">Species</string>
+    <string name="des">Des</string>
+    <string name="articles1">ARTICLES</string>
+    <string name="species1">SPECIES</string>
+    <string name="todo1">TODO</string>
+    <string name="like">like</string>
+    <string name="todo2">TODO</string>
+    <string name="likes">LIKES</string>
+    <string name="address">Address</string>
+    <string name="nguyen_van_a">Nguyen Van A</string>
+    <string name="quan_2_tp_hcm">Quan 2, TP HCM</string>
+    <string name="nguyen_a">Nguyen A</string>
+    <string name="phone">Phone</string>
+    <string name="password1">Password</string>
+    <string name="nameplant">NamePlant</string>
+    <string name="log_out">Log Out</string>
+    <string name="setting">Setting</string>
+    <string name="open">Open</string>
+    <string name="close">Close</string>
+
 </resources>

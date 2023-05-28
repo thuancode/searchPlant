@@ -15,7 +15,6 @@ import com.example.searchplant.model.Species
 class SpeciesAdapter(var context:Context, private var listSpe:List<Species>):BaseAdapter(){
     private var listAZ = mutableListOf<Char>().apply{addAll(('A'..'Z')+('a'..'z'))} as ArrayList<Char>
     private  var i = 0
-
     class ViewHolder(row: View) {
         var textSpec: TextView
         var textDeco: TextView

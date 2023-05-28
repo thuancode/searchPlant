@@ -1,11 +1,17 @@
 package com.example.searchplant.view.screen
 
+import android.app.Activity
+import android.content.ActivityNotFoundException
 import android.content.ContentValues.TAG
+import android.content.Intent
+import android.graphics.Bitmap
 import android.os.Bundle
+import android.provider.MediaStore
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.searchplant.R
@@ -21,6 +27,7 @@ import com.google.firebase.ktx.Firebase
 class SpeciesFragment : Fragment() {
     lateinit var binding : FragmentSpeciesBinding
     private var db = Firebase.firestore
+    private val REQUEST_IMAGE_CAPTURE = 100
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,6 +41,15 @@ class SpeciesFragment : Fragment() {
         binding.btnBack.setOnClickListener {
             findNavController().navigate(R.id.action_speciesFragment_to_homeFragment)
         }
+        binding.btnAdd.setOnClickListener {
+            val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+            try {
+                startActivityForResult(takePictureIntent,REQUEST_IMAGE_CAPTURE)
+            }catch (e: ActivityNotFoundException)
+            {
+                Toast.makeText(requireActivity(),"Error: "+e.localizedMessage, Toast.LENGTH_SHORT).show()
+            }
+        }
         val btnNavView = binding.bottomNavigationView1
         btnNavView.background = null
         val btnBack = binding.btnBack
@@ -46,7 +62,7 @@ class SpeciesFragment : Fragment() {
                     findNavController().navigate(R.id.action_speciesFragment_to_homeFragment)
                 }
                 R.id.profile -> {
-                    // Respond to navigation item 2 reselection
+                    findNavController().navigate(R.id.action_speciesFragment_to_profileFragment)
                 }
             }
         }
@@ -74,7 +90,6 @@ class SpeciesFragment : Fragment() {
                         }
                 }
             }
-
         }
     }
     private fun sendData(textSend:String)
@@ -82,5 +97,23 @@ class SpeciesFragment : Fragment() {
         val bundle = Bundle()
         bundle.putString("data",textSend)
         parentFragmentManager.setFragmentResult("species",bundle)
+    }
+    @Deprecated("Deprecated in Java")
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+
+        if((requestCode == REQUEST_IMAGE_CAPTURE) && (resultCode == Activity.RESULT_OK)){
+
+            val imageBitmap = data?.extras?.get("data") as Bitmap
+            sendDataImage(imageBitmap)
+            findNavController().navigate(R.id.action_speciesFragment_to_addNewPlantFragment)
+        }else{
+            super.onActivityResult(requestCode, resultCode, data)
+        }
+    }
+    private fun sendDataImage(image: Bitmap)
+    {
+        val bundle = Bundle()
+        bundle.putParcelable("imagePlant", Species(null,null,null,null,null,null,null,null,image))
+        parentFragmentManager.setFragmentResult("imagePlant1",bundle)
     }
 }

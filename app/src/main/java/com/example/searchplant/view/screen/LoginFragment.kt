@@ -1,7 +1,10 @@
 package com.example.searchplant.view.screen
 
+import android.content.ContentValues
 import android.content.Context
 import android.os.Bundle
+import android.os.Handler
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -11,16 +14,21 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.searchplant.R
 import com.example.searchplant.databinding.FragmentLoginBinding
+import com.example.searchplant.model.Species
+import com.example.searchplant.model.User
 
 import com.example.searchplant.viewmodel.LoginViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
 
 class LoginFragment : Fragment() {
     lateinit var binding : FragmentLoginBinding
     private lateinit var  viewModel : LoginViewModel
     private lateinit var auth: FirebaseAuth
+    private lateinit var db : FirebaseFirestore
 
 
     override fun onCreateView(
@@ -29,6 +37,7 @@ class LoginFragment : Fragment() {
 
     ): View?{
         auth = FirebaseAuth.getInstance()
+        db = FirebaseFirestore.getInstance()
         binding = FragmentLoginBinding.inflate(inflater, container,false)
         viewModel = ViewModelProvider(this)[LoginViewModel::class.java]
         checkbox()
@@ -62,7 +71,6 @@ class LoginFragment : Fragment() {
         listenerErrorEvent()
         return binding.root
     }
-
     private fun checkbox() {
         val sharedPref = requireActivity().getSharedPreferences("remember", Context.MODE_PRIVATE)
         val checkbox = sharedPref.getString("remember","")
@@ -100,7 +108,23 @@ class LoginFragment : Fragment() {
                 if (it.isSuccessful) {
                     val verification = auth.currentUser?.isEmailVerified
                     if (verification == true) {
-                        findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
+                        db.collection("USER")
+                            .get().addOnCompleteListener { task ->
+                                if(task.isSuccessful)
+                                {
+                                    for (document in task.result)
+                                    {
+                                        val myData = document.toObject(User::class.java)
+                                        Log.d(ContentValues.TAG, "---------------------${myData.getEmail()}")
+                                        if(myData.getEmail() == email)
+                                        {
+                                            sendPostID(myData.getPostID().toString())
+                                            findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
+                                        }
+                                    }
+                                }
+                            }
+
                     } else {
                         Toast.makeText(activity, "Vui lòng xác nhận Email", Toast.LENGTH_SHORT).show()
                     }
@@ -108,5 +132,11 @@ class LoginFragment : Fragment() {
                     Toast.makeText(activity, "Đăng nhập thất bại", Toast.LENGTH_SHORT).show()
                 }
             }
+    }
+    private fun sendPostID(postID: String) {
+        val sharePref = requireActivity().getSharedPreferences("sendPostID", Context.MODE_PRIVATE)
+        val editor = sharePref.edit()
+        editor.putString("postID",postID)
+        editor.apply()
     }
 }
