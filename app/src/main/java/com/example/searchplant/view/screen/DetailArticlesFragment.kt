@@ -1,10 +1,8 @@
 package com.example.searchplant.view.screen
 
-import android.animation.ObjectAnimator
 import android.app.Activity
 import android.content.ActivityNotFoundException
 import android.content.ContentValues
-import android.content.ContentValues.TAG
 import android.content.Context
 import android.content.Intent
 import android.content.res.ColorStateList
@@ -19,26 +17,22 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.fragment.app.FragmentResultListener
 import androidx.navigation.fragment.findNavController
 import com.example.searchplant.R
-import com.example.searchplant.adapter.PlantAdapter
-import com.example.searchplant.databinding.FragmentDetailPlantBinding
-import com.example.searchplant.databinding.FragmentListSpeciesBinding
+import com.example.searchplant.databinding.FragmentDetailArticlesBinding
+import com.example.searchplant.model.Articles
 import com.example.searchplant.model.Species
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
-import kotlinx.coroutines.flow.callbackFlow
 import java.io.File
 
-class DetailPlantFragment : Fragment() {
-    lateinit var binding: FragmentDetailPlantBinding
-    private var db = Firebase.firestore
-    private val REQUEST_IMAGE_CAPTURE = 100
 
+class DetailArticlesFragment : Fragment() {
+    private val REQUEST_IMAGE_CAPTURE = 100
+    lateinit var binding: FragmentDetailArticlesBinding
+    private var db = Firebase.firestore
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -46,15 +40,13 @@ class DetailPlantFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentDetailPlantBinding.inflate(inflater, container,false)
-        val btnNavView = binding.bottomNavigationView1
-        btnNavView.background = null
+        binding = FragmentDetailArticlesBinding.inflate(inflater, container,false)
+        binding.bottomNavigationView2.background = null
 
-        parentFragmentManager.setFragmentResultListener("Plant",this, FragmentResultListener { requestKey, result ->
-            val textData = result.getString("plant").toString()
-            getDataPlant(textData)
+        parentFragmentManager.setFragmentResultListener("articles",this,{requestKey,result->
+            val textData = result.getString("data").toString()
+            getDataArticles(textData)
         })
-
         binding.btnAdd.setOnClickListener {
             val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
             try {
@@ -64,64 +56,65 @@ class DetailPlantFragment : Fragment() {
                 Toast.makeText(requireActivity(),"Error: "+e.localizedMessage, Toast.LENGTH_SHORT).show()
             }
         }
-        binding.bottomNavigationView1.setOnNavigationItemReselectedListener{
+        binding.bottomNavigationView2.setOnNavigationItemReselectedListener{
             when(it.itemId) {
                 R.id.home -> {
-                    findNavController().navigate(R.id.action_detailPlantFragment_to_homeFragment)
+                    findNavController().navigate(R.id.action_detailArticlesFragment_to_homeFragment)
                 }
                 R.id.profile -> {
-                    findNavController().navigate(R.id.action_detailPlantFragment_to_profileFragment)
+                    findNavController().navigate(R.id.action_detailArticlesFragment_to_profileFragment)
                 }
             }
         }
         return binding.root
     }
-
-
-    private fun sendData(textSend:String)
-    {
-        val bundle = Bundle()
-        bundle.putString("plant_back",textSend)
-        parentFragmentManager.setFragmentResult("Plant_back",bundle)
-    }
-    private fun getDataPlant(textData: String){
+    private fun getDataArticles(textData: String) {
         db = FirebaseFirestore.getInstance()
-        db.collection("SPECIES")
+        db.collection("ARTICLES")
             .get()
             .addOnCompleteListener {
-                if (it.isSuccessful) {
-                    for (document in it.result) {
-                            val myData = document.toObject(Species::class.java)
-                            if(myData.getNamePlant().toString() == textData)
-                            {
-                                binding.textNamePlant.text = myData.getNamePlant()
-                                binding.textDescription.text = myData.getDescription()
-                                binding.textFamily.text = myData.getFamily()
-                                binding.textKingDom.text = myData.getKingDom()
-                                binding.textProperti.text = myData.getProperties()
-                                binding.textType.text = myData.getType()
-                                val sharedPref = requireActivity().getSharedPreferences("sendPostID", Context.MODE_PRIVATE)
-                                val postID = sharedPref.getString("postID","")
-                                if (postID != null) {
-                                    getDataHeart(postID,myData.getPostID().toString())
-                                }
-                                sendData(myData.getSpecies().toString())
-                                val storageRef = FirebaseStorage.getInstance().reference.child("plant/${myData.getPostID()}.jpg")
-                                val localFile = File.createTempFile("tempPlant","jpg")
-                                storageRef.getFile(localFile).addOnCompleteListener {
-                                    val bitmap = BitmapFactory.decodeFile(localFile.absolutePath)
-                                    binding.imagePlant.setImageBitmap(bitmap)
-                                }
+                if(it.isSuccessful){
+                    for(document in it.result)
+                    {
+                        val myData = document.toObject(Articles::class.java)
+                        if(myData.getImageArticles().toString() == textData)
+                        {
+                            binding.textTitleArt.text = myData.getTitleArticles()
+                            binding.textType.text = myData.getType()
+                            binding.textProperties.text = myData.getProperties()
+                            binding.textDescription.text = myData.getDescription()
+                            binding.tvDate.text = myData.getDatePost()
+                            db.collection("USER").document(myData.getUserPost().toString()).get().addOnSuccessListener {task->
+                                binding.tvUserName.text = task.data?.get("fullName").toString()
                             }
+                            val storageRef1 = FirebaseStorage.getInstance().reference.child("avatar/${myData.getUserPost()}.jpg")
+                            val localFile1 = File.createTempFile("avatarUser","jpg")
+                            storageRef1.getFile(localFile1).addOnCompleteListener{
+                                val bitmap = BitmapFactory.decodeFile(localFile1.absolutePath)
+                                binding.avatarUser.setImageBitmap(bitmap)
+                            }
+                            val sharedPref = requireActivity().getSharedPreferences("sendPostID", Context.MODE_PRIVATE)
+                            val postID = sharedPref.getString("postID","")
+                            if (postID != null) {
+                                getDataHeart(postID,myData.getImageArticles().toString())
+                            }
+                            val storageRef = FirebaseStorage.getInstance().reference.child("articles/${myData.getImageArticles()}.jpg")
+                            val localFile = File.createTempFile("tempArticles","jpg")
+                            storageRef.getFile(localFile).addOnCompleteListener{
+                                val bitmap = BitmapFactory.decodeFile(localFile.absolutePath)
+                                binding.imageArticles.setImageBitmap(bitmap)
+                            }
+
                         }
                     }
                 }
             }
+    }
     private fun getDataHeart(postIDEmail:String, postIDSpe:String) {
         Log.d(ContentValues.TAG, "---------------------$postIDEmail....$postIDSpe")
         db = FirebaseFirestore.getInstance()
         db.collection("USER").document(postIDEmail).get().addOnSuccessListener {
-            val list = it.data?.get("listLike") as ArrayList<String>
+            val list = it.data?.get("listLikeArt") as ArrayList<String>
             if(list.size == 0)
             {
                 binding.floatingBtnHeart.setColorFilter(Color.WHITE)
@@ -141,9 +134,8 @@ class DetailPlantFragment : Fragment() {
             }
         }
         binding.floatingBtnHeart.setOnClickListener {
-
             db.collection("USER").document(postIDEmail).get().addOnSuccessListener {
-                val list = it.data?.get("listLike") as ArrayList<String>
+                val list = it.data?.get("listLikeArt") as ArrayList<String>
                 if(list.contains(postIDSpe))
                 {
                     list.remove(postIDSpe)
@@ -156,7 +148,7 @@ class DetailPlantFragment : Fragment() {
                     binding.floatingBtnHeart.backgroundTintList = ColorStateList.valueOf(resources.getColor(R.color.white))
                 }
                 db.collection("USER").document(postIDEmail)
-                    .update("listLike", list)
+                    .update("listLikeArt", list)
             }
         }
     }
@@ -167,7 +159,7 @@ class DetailPlantFragment : Fragment() {
 
             val imageBitmap = data?.extras?.get("data") as Bitmap
             sendDataImage(imageBitmap)
-            findNavController().navigate(R.id.action_detailPlantFragment_to_addNewPlantFragment)
+            findNavController().navigate(R.id.action_detailArticlesFragment_to_addNewPlantFragment)
         }else{
             super.onActivityResult(requestCode, resultCode, data)
         }
@@ -179,4 +171,3 @@ class DetailPlantFragment : Fragment() {
         parentFragmentManager.setFragmentResult("imagePlant1",bundle)
     }
 }
-

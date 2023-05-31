@@ -40,6 +40,5 @@ class TypeAdapterHome(private var listPlant:List<Species>):
         val imageType = itemView.findViewById(R.id.imageTypeHome) as ImageView
         val textType = itemView.findViewById(R.id.textTypeHome) as TextView
         val textType1 = itemView.findViewById(R.id.textTypeHome) as TextView
-
     }
 }

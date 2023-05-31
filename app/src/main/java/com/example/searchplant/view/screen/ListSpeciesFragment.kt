@@ -100,7 +100,7 @@ class ListSpeciesFragment : Fragment() {
                             val adapter = PlantAdapter(requireActivity(),list)
                             binding.listPlant.adapter = adapter
                             binding.listPlant.isClickable = true
-                            binding.listPlant.setOnItemClickListener { parent, vixew, position, id ->
+                            binding.listPlant.setOnItemClickListener { parent, view, position, id ->
                                 sendData(list[position].getNamePlant().toString())
                                 findNavController().navigate(R.id.action_listSpeciesFragment_to_detailPlantFragment)
                             }

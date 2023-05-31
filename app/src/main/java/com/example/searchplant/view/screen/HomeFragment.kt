@@ -57,6 +57,9 @@ class HomeFragment : Fragment() {
                 findNavController().navigate(R.id.action_homeFragment_to_speciesFragment)
 
         }
+        binding.btnArt.setOnClickListener {
+            findNavController().navigate(R.id.action_homeFragment_to_articlesFragment)
+        }
         binding.btnIden.setOnClickListener{
             val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
             try {

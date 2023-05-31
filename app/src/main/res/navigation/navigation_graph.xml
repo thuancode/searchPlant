@@ -81,6 +81,12 @@
         <action
             android:id="@+id/action_homeFragment_to_profileFragment"
             app:destination="@id/profileFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_articlesFragment"
+            app:destination="@id/articlesFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_articlesFragment"
+            app:destination="@id/articlesFragment" />
     </fragment>
     <fragment
         android:id="@+id/speciesFragment"
@@ -185,6 +191,47 @@
         <action
             android:id="@+id/action_speciesProfileFragment2_to_profileFragment"
             app:destination="@id/profileFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/articlesFragment"
+        android:name="com.example.searchplant.view.screen.ArticlesFragment"
+        android:label="fragment_articles"
+        tools:layout="@layout/fragment_species" >
+        <action
+            android:id="@+id/action_articlesFragment_to_profileFragment"
+            app:destination="@id/profileFragment"
+            app:popUpTo="@id/articlesFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_articlesFragment_to_homeFragment"
+            app:destination="@id/homeFragment"
+            app:popUpTo="@id/articlesFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_articlesFragment_to_detailArticlesFragment"
+            app:destination="@id/detailArticlesFragment" />
+        <action
+            android:id="@+id/action_articlesFragment_to_addNewPlantFragment"
+            app:destination="@id/addNewPlantFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/detailArticlesFragment"
+        android:name="com.example.searchplant.view.screen.DetailArticlesFragment"
+        android:label="DetailArticlesFragment"
+        tools:layout="@layout/fragment_detail_articles">
+        <action
+            android:id="@+id/action_detailArticlesFragment_to_profileFragment"
+            app:destination="@id/profileFragment"
+            app:popUpTo="@id/detailArticlesFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_detailArticlesFragment_to_homeFragment"
+            app:destination="@id/homeFragment"
+            app:popUpTo="@id/detailArticlesFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_detailArticlesFragment_to_addNewPlantFragment"
+            app:destination="@id/addNewPlantFragment" />
     </fragment>
 
 </navigation>
