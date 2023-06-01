@@ -47,8 +47,8 @@
     <string name="nameplant">NamePlant</string>
     <string name="log_out">Log Out</string>
     <string name="setting">Setting</string>
-    <string name="open">Open</string>
-    <string name="close">Close</string>
+    <string name="open">Open Navigation Drawer</string>
+    <string name="close">Close Navigation Drawer</string>
     <string name="heart">Heart</string>
     <string name="save">save</string>
 
