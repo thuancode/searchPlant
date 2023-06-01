@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:background="@drawable/backgroud_search"
+        android:padding="22dp">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/ivArticle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:scaleType="centerCrop"
+            app:shapeAppearance="@style/RoundCorner"
+            android:src="@drawable/imagearticle"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:contentDescription="TODO" />
+
+        <TextView
+            android:id="@+id/tvArticleContent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:maxLines="2"
+            android:paddingStart="10dp"
+            android:text="David Austin, Who Breathed Life Into the Rose, Is Dead at 92 "
+            android:textColor="#36455A"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@+id/ivArticle"
+            app:layout_constraintStart_toStartOf="@+id/ivArticle"
+            app:layout_constraintTop_toBottomOf="@+id/ivArticle"
+            tools:ignore="RtlSymmetry" />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/ivUser"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_marginTop="16dp"
+            android:src="@drawable/image_use"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/tvArticleContent"
+            app:layout_constraintTop_toBottomOf="@+id/tvArticleContent"
+            app:layout_constraintVertical_bias="0.0"
+            android:contentDescription="TODO" />
+
+        <TextView
+            android:id="@+id/tvUserName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:text="Shivani Vora"
+            android:textColor="@color/black"
+            android:textSize="11sp"
+            app:layout_constraintStart_toEndOf="@+id/ivUser"
+            app:layout_constraintTop_toTopOf="@+id/ivUser" />
+
+        <TextView
+            android:id="@+id/tvDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:text="2023. 03. 23"
+            android:textColor="#A1A8B9"
+            android:textSize="9sp"
+            app:layout_constraintBottom_toBottomOf="@+id/ivUser"
+            app:layout_constraintStart_toEndOf="@+id/ivUser" />
+
+        <CheckBox
+            android:id="@+id/checkHeart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:button="@drawable/selector_wishlist_item_heart"
+            app:useMaterialThemeColors="false"
+            app:layout_constraintEnd_toEndOf="@+id/tvArticleContent"
+            app:layout_constraintTop_toBottomOf="@+id/tvArticleContent"/>
+
+        <CheckBox
+            android:id="@+id/checkSave"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:button="@drawable/selector_wishlist_item_bookmark"
+            app:useMaterialThemeColors="false"
+            app:layout_constraintBottom_toBottomOf="@+id/checkHeart"
+            app:layout_constraintEnd_toStartOf="@+id/checkHeart"
+            app:layout_constraintTop_toTopOf="@+id/checkHeart" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
