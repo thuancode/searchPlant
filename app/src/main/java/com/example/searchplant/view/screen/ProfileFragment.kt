@@ -249,18 +249,22 @@ import java.io.File
                 R.id.nav_profile -> {
                     Toast.makeText(activity, "Click profile", Toast.LENGTH_SHORT).show()
                     Log.d(ContentValues.TAG, "THuannnnnnnnnnnnnnnnnnnn::profile")
-                    return true
+                    return false
                 }
                 R.id.nav_setting -> {
                     Toast.makeText(activity, "Click setting", Toast.LENGTH_SHORT).show()
                     Log.d(ContentValues.TAG, "THuannnnnnnnnnnnnnnnnnnn::setting")
 
-                    return true
+                    return false
                 }
                 R.id.nav_logout -> {
-                    Toast.makeText(activity, "Click logout", Toast.LENGTH_SHORT).show()
-                    Log.d(ContentValues.TAG, "THuannnnnnnnnnnnnnnnnnnn::logout")
-                    return true
+                    findNavController().navigate(R.id.action_profileFragment_to_loginFragment)
+                    val sharePref = requireActivity().getSharedPreferences("remember", Context.MODE_PRIVATE)
+                    val editor = sharePref.edit()
+                    editor.putString("remember","false")
+                    editor.apply()
+                    Toast.makeText(activity, "Log out successfull", Toast.LENGTH_SHORT).show()
+                    return false
                 }
             }
             return true

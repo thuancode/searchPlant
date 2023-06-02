@@ -8,17 +8,6 @@
         android:layout_height="match_parent"
         tools:openDrawer="end"
         tools:context=".view.screen.ProfileFragment">
-
-    <com.google.android.material.navigation.NavigationView
-        android:id="@+id/nav_view"
-        android:layout_gravity="end"
-        app:headerLayout="@layout/header_layout"
-        app:menu="@menu/profile_menu"
-        android:fitsSystemWindows="true"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent">
-    </com.google.android.material.navigation.NavigationView>
-
         <ScrollView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -292,6 +281,16 @@
                 app:rippleColor="@color/white" />
 
         </androidx.coordinatorlayout.widget.CoordinatorLayout>
+        <com.google.android.material.navigation.NavigationView
+            android:id="@+id/nav_view"
+            android:layout_gravity="end"
+            app:headerLayout="@layout/header_layout"
+            app:menu="@menu/profile_menu"
+            android:fitsSystemWindows="false"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+        </com.google.android.material.navigation.NavigationView>
+
 
     </androidx.drawerlayout.widget.DrawerLayout>
 </layout>

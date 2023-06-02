@@ -84,9 +84,7 @@
         <action
             android:id="@+id/action_homeFragment_to_articlesFragment"
             app:destination="@id/articlesFragment" />
-        <action
-            android:id="@+id/action_homeFragment_to_articlesFragment"
-            app:destination="@id/articlesFragment" />
+
     </fragment>
     <fragment
         android:id="@+id/speciesFragment"
@@ -183,6 +181,11 @@
         <action
             android:id="@+id/action_profileFragment_to_speciesProfileFragment2"
             app:destination="@id/speciesProfileFragment2" />
+        <action
+            android:id="@+id/action_profileFragment_to_loginFragment"
+            app:destination="@id/loginFragment"
+            app:popUpTo="@id/profileFragment"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/speciesProfileFragment2"
