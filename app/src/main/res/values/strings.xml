@@ -51,5 +51,6 @@
     <string name="close">Close Navigation Drawer</string>
     <string name="heart">Heart</string>
     <string name="save">save</string>
+    <string name="post">POST</string>
 
 </resources>

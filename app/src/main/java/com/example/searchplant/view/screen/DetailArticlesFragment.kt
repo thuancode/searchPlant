@@ -30,7 +30,6 @@ import java.io.File
 
 
 class DetailArticlesFragment : Fragment() {
-    private val REQUEST_IMAGE_CAPTURE = 100
     lateinit var binding: FragmentDetailArticlesBinding
     private var db = Firebase.firestore
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,15 +46,12 @@ class DetailArticlesFragment : Fragment() {
             val textData = result.getString("data").toString()
             getDataArticles(textData)
         })
+
+
         binding.btnAdd.setOnClickListener {
-            val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-            try {
-                startActivityForResult(takePictureIntent,REQUEST_IMAGE_CAPTURE)
-            }catch (e: ActivityNotFoundException)
-            {
-                Toast.makeText(requireActivity(),"Error: "+e.localizedMessage, Toast.LENGTH_SHORT).show()
-            }
+            findNavController().navigate(R.id.action_detailArticlesFragment_to_addNewArticlesFragment)
         }
+
         binding.bottomNavigationView2.setOnNavigationItemReselectedListener{
             when(it.itemId) {
                 R.id.home -> {
@@ -152,18 +148,7 @@ class DetailArticlesFragment : Fragment() {
             }
         }
     }
-    @Deprecated("Deprecated in Java")
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
 
-        if((requestCode == REQUEST_IMAGE_CAPTURE) && (resultCode == Activity.RESULT_OK)){
-
-            val imageBitmap = data?.extras?.get("data") as Bitmap
-            sendDataImage(imageBitmap)
-            findNavController().navigate(R.id.action_detailArticlesFragment_to_addNewPlantFragment)
-        }else{
-            super.onActivityResult(requestCode, resultCode, data)
-        }
-    }
     private fun sendDataImage(image: Bitmap)
     {
         val bundle = Bundle()

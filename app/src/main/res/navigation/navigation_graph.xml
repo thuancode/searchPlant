@@ -235,6 +235,16 @@
         <action
             android:id="@+id/action_detailArticlesFragment_to_addNewPlantFragment"
             app:destination="@id/addNewPlantFragment" />
+        <action
+            android:id="@+id/action_detailArticlesFragment_to_addNewArticlesFragment"
+            app:destination="@id/addNewArticlesFragment"
+            app:popUpTo="@id/homeFragment"
+            app:popUpToInclusive="true" />
     </fragment>
+    <fragment
+        android:id="@+id/addNewArticlesFragment"
+        android:name="com.example.searchplant.view.screen.AddNewArticlesFragment"
+        android:label="fragment_add_new_articles"
+        tools:layout="@layout/fragment_add_new_articles" />
 
 </navigation>

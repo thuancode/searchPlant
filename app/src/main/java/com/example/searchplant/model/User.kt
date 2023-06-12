@@ -5,6 +5,7 @@ data class User(private var postID:String ?= null,
                 private var Phone: String?= null,
                 private var password:String ?= null,
                 private var address:String ?= null,
+                private var ListFollow:ArrayList<String> ?= null,
                 private var ListLike:ArrayList<String> ?= null,
                 private var ListLikeArt:ArrayList<String> ?= null,
                 private var ListSave:ArrayList<String> ?= null) {
@@ -12,7 +13,10 @@ data class User(private var postID:String ?= null,
     {
         return this.postID
     }
-
+    fun getListFollow(): ArrayList<String>?
+    {
+        return this.ListFollow
+    }
     fun getEmail(): String? {
         return this.email
     }

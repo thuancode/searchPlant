@@ -13,11 +13,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SearchView
 import android.widget.Toast
 import androidx.fragment.app.FragmentResultListener
 import androidx.navigation.fragment.findNavController
 import com.example.searchplant.R
 import com.example.searchplant.adapter.PlantAdapter
+import com.example.searchplant.adapter.SpeciesAdapter
 import com.example.searchplant.databinding.FragmentListSpeciesBinding
 import com.example.searchplant.model.Species
 import com.google.firebase.firestore.FirebaseFirestore
@@ -27,12 +29,15 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import java.util.*
+import kotlin.collections.ArrayList
 
 class ListSpeciesFragment : Fragment() {
     lateinit var binding: FragmentListSpeciesBinding
     private var db = Firebase.firestore
     private val REQUEST_IMAGE_CAPTURE = 100
-
+    private  var list : ArrayList<Species> = ArrayList()
+    private lateinit var adapter : PlantAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -85,7 +90,6 @@ class ListSpeciesFragment : Fragment() {
     }
 
     private fun getDataPlant(key:String){
-        var list: ArrayList<Species> = ArrayList()
         db = FirebaseFirestore.getInstance()
         db.collection("SPECIES")
             .get()
@@ -97,18 +101,55 @@ class ListSpeciesFragment : Fragment() {
                         {
                             list.add(myData)
                             Log.d(ContentValues.TAG, "---------------------$myData")
-                            val adapter = PlantAdapter(requireActivity(),list)
+                            adapter = PlantAdapter(requireActivity(),list)
                             binding.listPlant.adapter = adapter
                             binding.listPlant.isClickable = true
                             binding.listPlant.setOnItemClickListener { parent, view, position, id ->
                                 sendData(list[position].getNamePlant().toString())
                                 findNavController().navigate(R.id.action_listSpeciesFragment_to_detailPlantFragment)
                             }
+                            binding.edtSearchSpecies.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+                                override fun onQueryTextSubmit(query: String?): Boolean {
+                                    return false
+                                }
+
+                                override fun onQueryTextChange(newText: String?): Boolean {
+                                    filterList(newText)
+                                    return true
+                                }
+                            })
                         }
                     }
                 }
             }
 
+    }
+
+    private fun filterList(query:String?){
+        if(query != null)
+        {
+            val filteredList = ArrayList<Species>()
+            for (i in list)
+            {
+                if(i.getSpecies()?.toLowerCase(Locale.ROOT)?.contains(query.toLowerCase(Locale.ROOT)) == true||
+                    i.getKingDom()?.toLowerCase(Locale.ROOT)?.contains(query.toLowerCase(Locale.ROOT)) == true||
+                    i.getNamePlant()?.toLowerCase(Locale.ROOT)?.contains(query.toLowerCase(Locale.ROOT)) == true||
+                    i.getFamily()?.toLowerCase(Locale.ROOT)?.contains(query.toLowerCase(Locale.ROOT)) == true||
+                    i.getType()?.toLowerCase(Locale.ROOT)?.contains(query.toLowerCase(Locale.ROOT)) == true||
+                    i.getProperties()?.toLowerCase(Locale.ROOT)?.contains(query.toLowerCase(Locale.ROOT)) == true)
+                {
+                    filteredList.add(i)
+                }
+            }
+            if(filteredList.isEmpty())
+            {
+                Toast.makeText(requireContext(),"Không tìm thấy !",Toast.LENGTH_SHORT).show()
+            }
+            else
+            {
+                adapter.setFilteredList(filteredList)
+            }
+        }
     }
     private fun sendData(textSend:String)
     {

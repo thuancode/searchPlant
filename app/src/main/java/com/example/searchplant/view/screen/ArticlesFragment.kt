@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SearchView
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -25,6 +26,8 @@ import com.example.searchplant.model.Species
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class ArticlesFragment : Fragment() {
@@ -33,7 +36,8 @@ class ArticlesFragment : Fragment() {
     private var db = Firebase.firestore
     private var listLike:ArrayList<String> = arrayListOf()
     private var listSave:ArrayList<String> = arrayListOf()
-
+    private var list: ArrayList<Articles> = ArrayList()
+    private lateinit var adapter:ArticlesAdapter
         override fun onCreate(savedInstanceState: Bundle?) {
             super.onCreate(savedInstanceState)
         }
@@ -78,7 +82,7 @@ class ArticlesFragment : Fragment() {
             return binding.root
         }
         private fun getDataArticles(){
-            var list: ArrayList<Articles> = ArrayList()
+
             db = FirebaseFirestore.getInstance()
             db.collection("ARTICLES")
                 .get()
@@ -95,7 +99,7 @@ class ArticlesFragment : Fragment() {
                                     listLike = task.data?.get("listLikeArt") as ArrayList<String>
                                     listSave = task.data?.get("listSave") as ArrayList<String>
                                     Log.d(ContentValues.TAG, "--------DEPZAIII2--------------${listSave},...$listLike")
-                                    var adapter = ArticlesAdapter(list,listLike,listSave,postID)
+                                    adapter = ArticlesAdapter(list,listLike,listSave,postID)
                                     binding.listArticles.layoutManager = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
                                     binding.listArticles.adapter = adapter
                                     adapter.setOnClickItemListener(object : ArticlesAdapter.onItemClickListener{
@@ -106,6 +110,16 @@ class ArticlesFragment : Fragment() {
                                             findNavController().navigate(R.id.action_articlesFragment_to_detailArticlesFragment)
                                         }
                                     })
+                                    binding.edtSearchSpecies.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+                                        override fun onQueryTextSubmit(query: String?): Boolean {
+                                            return false
+                                        }
+
+                                        override fun onQueryTextChange(newText: String?): Boolean {
+                                            filterList(newText)
+                                            return true
+                                        }
+                                    })
                                 }
                             }
                         }
@@ -113,7 +127,31 @@ class ArticlesFragment : Fragment() {
 
                 }
         }
-
+    private fun filterList(query:String?){
+        if(query != null)
+        {
+            val filteredList = ArrayList<Articles>()
+            for (i in list)
+            {
+                if(i.getTitleArticles()?.toLowerCase(Locale.ROOT)?.contains(query.toLowerCase(Locale.ROOT)) == true ||
+                    i.getProperties()?.toLowerCase(Locale.ROOT)?.contains(query.toLowerCase(Locale.ROOT)) == true ||
+                    i.getType()?.toLowerCase(Locale.ROOT)?.contains(query.toLowerCase(Locale.ROOT)) == true ||
+                    i.getDatePost()?.toLowerCase(Locale.ROOT)?.contains(query.toLowerCase(Locale.ROOT)) == true ||
+                    i.getUserPost()?.toLowerCase(Locale.ROOT)?.contains(query.toLowerCase(Locale.ROOT)) == true)
+                {
+                    filteredList.add(i)
+                }
+            }
+            if(filteredList.isEmpty())
+            {
+                Toast.makeText(requireContext(),"Không tìm thấy !",Toast.LENGTH_SHORT).show()
+            }
+            else
+            {
+                adapter.setFilteredList(filteredList)
+            }
+        }
+    }
     private fun sendData(textSend:String)
         {
             val bundle = Bundle()
