@@ -247,6 +247,9 @@ import java.io.File
         override fun onNavigationItemSelected(item: MenuItem): Boolean {
             when(item.itemId) {
                 R.id.nav_profile -> {
+
+                    findNavController().navigate(R.id.action_profileFragment_to_informationFragment)
+
                     Toast.makeText(activity, "Click profile", Toast.LENGTH_SHORT).show()
                     Log.d(ContentValues.TAG, "THuannnnnnnnnnnnnnnnnnnn::profile")
                     return false
