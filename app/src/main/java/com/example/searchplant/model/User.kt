@@ -9,6 +9,7 @@ data class User(private var postID:String ?= null,
                 private var ListLike:ArrayList<String> ?= null,
                 private var ListLikeArt:ArrayList<String> ?= null,
                 private var ListSave:ArrayList<String> ?= null) {
+
     fun getPostID(): String?
     {
         return this.postID
