@@ -186,6 +186,9 @@
             app:destination="@id/loginFragment"
             app:popUpTo="@id/profileFragment"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_profileFragment_to_informationFragment"
+            app:destination="@id/informationFragment" />
     </fragment>
     <fragment
         android:id="@+id/speciesProfileFragment2"
@@ -246,5 +249,9 @@
         android:name="com.example.searchplant.view.screen.AddNewArticlesFragment"
         android:label="fragment_add_new_articles"
         tools:layout="@layout/fragment_add_new_articles" />
+    <fragment
+        android:id="@+id/informationFragment"
+        android:name="com.example.searchplant.view.screen.InformationFragment"
+        android:label="InformationFragment" />
 
 </navigation>

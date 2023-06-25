@@ -2,7 +2,7 @@ package com.example.searchplant.model
 data class User(private var postID:String ?= null,
                 private var email:String ?= null,
                 private var fullName:String ?= null,
-                private var Phone: String?= null,
+                private var phone: String?= null,
                 private var password:String ?= null,
                 private var address:String ?= null,
                 private var ListFollow:ArrayList<String> ?= null,
@@ -25,7 +25,7 @@ data class User(private var postID:String ?= null,
         return this.fullName
     }
     fun getPhone():String?{
-        return this.Phone
+        return this.phone
     }
     fun getPassword():String?{
         return this.password
@@ -55,7 +55,7 @@ data class User(private var postID:String ?= null,
         if (postID != other.postID) return false
         if (email != other.email) return false
         if (fullName != other.fullName) return false
-        if (Phone != other.Phone) return false
+        if (phone != other.phone) return false
         if (password != other.password) return false
         if (address != other.address) return false
         if (ListLike != other.ListLike) return false
@@ -69,7 +69,7 @@ data class User(private var postID:String ?= null,
         var result = postID?.hashCode() ?: 0
         result = 31 * result + (email?.hashCode() ?: 0)
         result = 31 * result + (fullName?.hashCode() ?: 0)
-        result = 31 * result + (Phone?.hashCode() ?: 0)
+        result = 31 * result + (phone?.hashCode() ?: 0)
         result = 31 * result + (password?.hashCode() ?: 0)
         result = 31 * result + (address?.hashCode() ?: 0)
         result = 31 * result + (ListLike?.hashCode() ?: 0)
@@ -79,7 +79,7 @@ data class User(private var postID:String ?= null,
     }
 
     override fun toString(): String {
-        return "User(postID=$postID, email=$email, fullName=$fullName, Phone=$Phone, password=$password, address=$address, ListLike=$ListLike, ListLikeArt=$ListLikeArt, ListSave=$ListSave)"
+        return "User(postID=$postID, email=$email, fullName=$fullName, Phone=$phone, password=$password, address=$address, ListLike=$ListLike, ListLikeArt=$ListLikeArt, ListSave=$ListSave)"
     }
 
 
