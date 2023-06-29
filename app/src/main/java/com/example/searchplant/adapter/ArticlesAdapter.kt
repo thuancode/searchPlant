@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.searchplant.R
 import com.example.searchplant.R.*
 import com.example.searchplant.model.Articles
+import com.example.searchplant.model.Species
 import com.google.android.material.button.MaterialButton
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
@@ -105,5 +106,11 @@ class ArticlesAdapter(private var listArticle:List<Articles>,private var listLik
                 listener.onItemClick(adapterPosition)
             }
         }
+    }
+    @SuppressLint("NotifyDataSetChanged")
+    fun setFilteredList(list : ArrayList<Articles>)
+    {
+        this.listArticle = list
+        notifyDataSetChanged()
     }
 }

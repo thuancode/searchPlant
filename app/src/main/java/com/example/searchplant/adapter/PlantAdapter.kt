@@ -69,4 +69,9 @@ class PlantAdapter(var context: Context, private var listPlant:List<Species>): B
         viewHolder.textDescription.text = spec.getDescription()
         return view!!
     }
+    fun setFilteredList(list : ArrayList<Species>)
+    {
+        this.listPlant = list
+        notifyDataSetChanged()
+    }
 }

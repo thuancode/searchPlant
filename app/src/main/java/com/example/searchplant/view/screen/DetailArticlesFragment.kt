@@ -30,7 +30,6 @@ import java.io.File
 
 
 class DetailArticlesFragment : Fragment() {
-    private val REQUEST_IMAGE_CAPTURE = 100
     lateinit var binding: FragmentDetailArticlesBinding
     private var db = Firebase.firestore
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,15 +46,12 @@ class DetailArticlesFragment : Fragment() {
             val textData = result.getString("data").toString()
             getDataArticles(textData)
         })
+
+
         binding.btnAdd.setOnClickListener {
-            val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-            try {
-                startActivityForResult(takePictureIntent,REQUEST_IMAGE_CAPTURE)
-            }catch (e: ActivityNotFoundException)
-            {
-                Toast.makeText(requireActivity(),"Error: "+e.localizedMessage, Toast.LENGTH_SHORT).show()
-            }
+            findNavController().navigate(R.id.action_detailArticlesFragment_to_addNewArticlesFragment)
         }
+
         binding.bottomNavigationView2.setOnNavigationItemReselectedListener{
             when(it.itemId) {
                 R.id.home -> {
@@ -66,6 +62,7 @@ class DetailArticlesFragment : Fragment() {
                 }
             }
         }
+
         return binding.root
     }
     private fun getDataArticles(textData: String) {
@@ -86,18 +83,24 @@ class DetailArticlesFragment : Fragment() {
                             binding.tvDate.text = myData.getDatePost()
                             db.collection("USER").document(myData.getUserPost().toString()).get().addOnSuccessListener {task->
                                 binding.tvUserName.text = task.data?.get("fullName").toString()
+
                             }
+
                             val storageRef1 = FirebaseStorage.getInstance().reference.child("avatar/${myData.getUserPost()}.jpg")
                             val localFile1 = File.createTempFile("avatarUser","jpg")
                             storageRef1.getFile(localFile1).addOnCompleteListener{
                                 val bitmap = BitmapFactory.decodeFile(localFile1.absolutePath)
                                 binding.avatarUser.setImageBitmap(bitmap)
                             }
+
                             val sharedPref = requireActivity().getSharedPreferences("sendPostID", Context.MODE_PRIVATE)
                             val postID = sharedPref.getString("postID","")
+
                             if (postID != null) {
                                 getDataHeart(postID,myData.getImageArticles().toString())
+                                setUserFollow(myData.getUserPost().toString(),postID)
                             }
+
                             val storageRef = FirebaseStorage.getInstance().reference.child("articles/${myData.getImageArticles()}.jpg")
                             val localFile = File.createTempFile("tempArticles","jpg")
                             storageRef.getFile(localFile).addOnCompleteListener{
@@ -110,6 +113,24 @@ class DetailArticlesFragment : Fragment() {
                 }
             }
     }
+
+    private fun setUserFollow(idUser: String,idFollow :String) {
+
+        binding.button.setOnClickListener {
+            db = FirebaseFirestore.getInstance()
+            db.collection("USER").document(idUser).get().addOnSuccessListener {
+                val listFollow = it.data?.get("listFollow") as ArrayList<String>
+                if (listFollow.contains(idFollow)) {
+                    listFollow.remove(idFollow)
+                } else {
+                    listFollow.add(idFollow)
+                }
+                db.collection("USER").document(idUser)
+                    .update("listFollow", listFollow)
+            }
+        }
+    }
+
     private fun getDataHeart(postIDEmail:String, postIDSpe:String) {
         Log.d(ContentValues.TAG, "---------------------$postIDEmail....$postIDSpe")
         db = FirebaseFirestore.getInstance()
@@ -152,18 +173,7 @@ class DetailArticlesFragment : Fragment() {
             }
         }
     }
-    @Deprecated("Deprecated in Java")
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
 
-        if((requestCode == REQUEST_IMAGE_CAPTURE) && (resultCode == Activity.RESULT_OK)){
-
-            val imageBitmap = data?.extras?.get("data") as Bitmap
-            sendDataImage(imageBitmap)
-            findNavController().navigate(R.id.action_detailArticlesFragment_to_addNewPlantFragment)
-        }else{
-            super.onActivityResult(requestCode, resultCode, data)
-        }
-    }
     private fun sendDataImage(image: Bitmap)
     {
         val bundle = Bundle()

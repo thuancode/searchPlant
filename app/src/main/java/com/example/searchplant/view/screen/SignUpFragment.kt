@@ -85,8 +85,9 @@ class SignUpFragment : Fragment() {
         val listLike:ArrayList<String> = arrayListOf()
         val listLikeArt:ArrayList<String> = arrayListOf()
         val listSave:ArrayList<String> = arrayListOf()
+        val listFollow:ArrayList<String> = arrayListOf()
 
-        val user = User(null,eMail,fullName, pHone, passWord,Address,listLike,listLikeArt,listSave)
+        val user = User(null,eMail,fullName, pHone, passWord,Address,listFollow,listLike,listLikeArt,listSave)
 
         db.collection("USER").whereEqualTo("email",eMail).get().addOnSuccessListener { task->
             if(task.isEmpty)

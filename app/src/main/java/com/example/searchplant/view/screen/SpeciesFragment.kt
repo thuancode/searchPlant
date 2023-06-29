@@ -11,6 +11,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SearchView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -22,13 +23,16 @@ import com.example.searchplant.model.serviceSpecies
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class SpeciesFragment : Fragment() {
     lateinit var binding : FragmentSpeciesBinding
     private var db = Firebase.firestore
     private val REQUEST_IMAGE_CAPTURE = 100
-
+    private  var list : ArrayList<Species> = ArrayList()
+    private lateinit var adapter : SpeciesAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -56,6 +60,7 @@ class SpeciesFragment : Fragment() {
         btnBack.background = null
         getDataSpecies()
 
+
         binding.bottomNavigationView1.setOnNavigationItemReselectedListener{
             when(it.itemId) {
                 R.id.home -> {
@@ -69,7 +74,7 @@ class SpeciesFragment : Fragment() {
         return binding.root
     }
     private fun getDataSpecies(){
-        var list: ArrayList<Species> = ArrayList()
+
         db = FirebaseFirestore.getInstance()
         db.collection("SPECIES")
             .get()
@@ -81,14 +86,46 @@ class SpeciesFragment : Fragment() {
                         Log.d(TAG, "---------------------$myData")
                         val serSpec = serviceSpecies()
                         list = serSpec.sortSpecies(list)
-                        val adapter = SpeciesAdapter(requireActivity(),list)
+                        adapter = SpeciesAdapter(requireActivity(),list)
                         binding.listSpec.adapter = adapter
                         binding.listSpec.isClickable = true
                         binding.listSpec.setOnItemClickListener { parent, vixew, position, id ->
                             sendData(list[position].getSpecies().toString())
                             findNavController().navigate(R.id.action_speciesFragment_to_listSpeciesFragment)
                         }
+                        binding.edtSearchSpecies.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+                            override fun onQueryTextSubmit(query: String?): Boolean {
+                                return false
+                            }
+
+                            override fun onQueryTextChange(newText: String?): Boolean {
+                                filterList(newText)
+                                return true
+                            }
+                        })
                 }
+            }
+        }
+    }
+
+    private fun filterList(query:String?){
+        if(query != null)
+        {
+            val filteredList = ArrayList<Species>()
+            for (i in list)
+            {
+                if(i.getSpecies()?.toLowerCase(Locale.ROOT)?.contains(query.toLowerCase(Locale.ROOT)) == true)
+                {
+                    filteredList.add(i)
+                }
+            }
+            if(filteredList.isEmpty())
+            {
+                Toast.makeText(requireContext(),"Không tìm thấy !",Toast.LENGTH_SHORT).show()
+            }
+            else
+            {
+                adapter.setFilteredList(filteredList)
             }
         }
     }

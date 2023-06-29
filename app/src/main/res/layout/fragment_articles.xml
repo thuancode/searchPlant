@@ -38,18 +38,33 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:ignore="HardcodedText"/>
 
+        <SearchView
+            android:id="@+id/edt_searchSpecies"
+            android:layout_width="373dp"
+            android:layout_height="51dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="145dp"
+            android:layout_marginEnd="32dp"
+            android:background="@drawable/backgroud_search"
+            android:queryHint="Search For Articles"
+            android:iconifiedByDefault="false"
+            android:textSize="14sp"
+            android:queryBackground="@android:color/transparent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="HardcodedText,RtlSymmetry" />
+
         <ScrollView
             android:id="@+id/scrollview1"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="170dp"
-            android:layout_marginBottom="50dp"
+            android:layout_height="550dp"
             android:background="#EAE7E7"
             android:fillViewport="true"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent">
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/edt_searchSpecies">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/listArticles"
@@ -58,27 +73,6 @@
                 tools:ignore="NestedScrolling"
                 tools:listitem="@layout/article_item" />
         </ScrollView>
-
-        <EditText
-            android:id="@+id/edt_searchSpecies"
-            android:layout_width="373dp"
-            android:layout_height="51dp"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="145dp"
-            android:layout_marginEnd="32dp"
-            android:background="@drawable/backgroud_search"
-            android:drawableStart="@android:drawable/ic_menu_search"
-            android:drawablePadding="10dp"
-            android:ems="10"
-            android:hint="Search For Species"
-            android:inputType="textPersonName"
-            android:paddingStart="10dp"
-            android:textColorHint="#D2D2D2"
-            android:textSize="14sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="HardcodedText,RtlSymmetry" />
         <androidx.coordinatorlayout.widget.CoordinatorLayout
             android:id="@+id/coordinatorLayout"
             android:layout_width="match_parent"

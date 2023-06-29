@@ -3,25 +3,21 @@ package com.example.searchplant.view.screen
 import android.content.ContentValues
 import android.content.Context
 import android.os.Bundle
-import android.os.Handler
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.searchplant.R
 import com.example.searchplant.databinding.FragmentLoginBinding
-import com.example.searchplant.model.Species
 import com.example.searchplant.model.User
-
 import com.example.searchplant.viewmodel.LoginViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
 
 class LoginFragment : Fragment() {
@@ -29,7 +25,7 @@ class LoginFragment : Fragment() {
     private lateinit var  viewModel : LoginViewModel
     private lateinit var auth: FirebaseAuth
     private lateinit var db : FirebaseFirestore
-
+//    private lateinit var progressDialog: MaterialDialog
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,6 +34,7 @@ class LoginFragment : Fragment() {
     ): View?{
         auth = FirebaseAuth.getInstance()
         db = FirebaseFirestore.getInstance()
+//        createProgress()
         binding = FragmentLoginBinding.inflate(inflater, container,false)
         viewModel = ViewModelProvider(this)[LoginViewModel::class.java]
         checkbox()
@@ -71,6 +68,14 @@ class LoginFragment : Fragment() {
         listenerErrorEvent()
         return binding.root
     }
+
+//    private fun createProgress() {
+//        progressDialog = MaterialDialog.Builder(requireActivity())
+//            .content(R.string.waiting_message)
+//            .progress(true, 0)
+//            .build()
+//    }
+
     private fun checkbox() {
         val sharedPref = requireActivity().getSharedPreferences("remember", Context.MODE_PRIVATE)
         val checkbox = sharedPref.getString("remember","")
@@ -103,6 +108,7 @@ class LoginFragment : Fragment() {
         }
     }
     private fun signInWithEmailAndPassword(email:String,pass:String) {
+//        showProgressDialog(true)
         auth.signInWithEmailAndPassword(email,pass)
             .addOnCompleteListener(requireActivity()){
                 if (it.isSuccessful) {
@@ -118,6 +124,7 @@ class LoginFragment : Fragment() {
                                         Log.d(ContentValues.TAG, "---------------------${myData.getEmail()}")
                                         if(myData.getEmail() == email)
                                         {
+//                                            showProgressDialog(false)
                                             sendPostID(myData.getPostID().toString())
                                             findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
                                         }
@@ -139,4 +146,16 @@ class LoginFragment : Fragment() {
         editor.putString("postID",postID)
         editor.apply()
     }
+//    private fun showProgressDialog(value: Boolean) {
+//        if (value) {
+//            if (!progressDialog.isShowing()) {
+//                progressDialog.show()
+//                progressDialog.setCancelable(false)
+//            }
+//        } else {
+//            if (progressDialog.isShowing()) {
+//                progressDialog.dismiss()
+//            }
+//        }
+//    }
 }

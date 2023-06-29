@@ -4,7 +4,7 @@ import com.google.type.Date
 
 data class Articles ( private var titleArticles:String ?= null,
                       private var imageArticles: String?= null,
-                      private var Description:String ?= null,
+                      private var description:String ?= null,
                       private var properties:String ?= null,
                       private var type:String ?= null,
                       private var userPost:String ?= null,
@@ -16,7 +16,7 @@ data class Articles ( private var titleArticles:String ?= null,
         return this.imageArticles
     }
     fun getDescription(): String? {
-        return this.Description
+        return this.description
     }
     fun getProperties(): String? {
         return this.properties

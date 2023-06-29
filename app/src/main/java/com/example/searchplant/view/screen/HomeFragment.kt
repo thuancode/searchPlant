@@ -53,13 +53,15 @@ class HomeFragment : Fragment() {
         val btnNavView = binding.bottomNavigationView
         btnNavView.background = null
         getDataSpecies()
+
         binding.btnSpe.setOnClickListener {
                 findNavController().navigate(R.id.action_homeFragment_to_speciesFragment)
-
         }
+
         binding.btnArt.setOnClickListener {
             findNavController().navigate(R.id.action_homeFragment_to_articlesFragment)
         }
+
         binding.btnIden.setOnClickListener{
             val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
             try {
@@ -69,6 +71,7 @@ class HomeFragment : Fragment() {
                 Toast.makeText(requireActivity(),"Error: "+e.localizedMessage,Toast.LENGTH_SHORT).show()
             }
         }
+
         binding.btnAdd.setOnClickListener {
             val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
             try {
@@ -78,6 +81,7 @@ class HomeFragment : Fragment() {
                 Toast.makeText(requireActivity(),"Error: "+e.localizedMessage,Toast.LENGTH_SHORT).show()
             }
         }
+
         binding.bottomNavigationView.setOnNavigationItemReselectedListener{
             when(it.itemId) {
                 R.id.home -> {
@@ -88,6 +92,7 @@ class HomeFragment : Fragment() {
                 }
             }
         }
+
         binding.imageAvatar.setOnClickListener {
             findNavController().navigate(R.id.action_homeFragment_to_profileFragment)
         }

@@ -61,6 +61,11 @@ class SpeciesAdapter(var context:Context, private var listSpe:List<Species>):Bas
         viewHolder.textSpec.text = spec.getSpecies().toString()
         return view!!
     }
+    fun setFilteredList(list : ArrayList<Species>)
+    {
+        this.listSpe = list
+        notifyDataSetChanged()
+    }
     private fun check(textFirst:Char):Char
     {   var text : Char = ' '
         for(a in listAZ){
