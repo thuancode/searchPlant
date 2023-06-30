@@ -36,7 +36,7 @@ class LoginViewModel : ViewModel(){
     }
 
     private fun passValid(password: String): Boolean {
-        val regex = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{11}$".toRegex()
+        val regex = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{11,}$".toRegex()
         return regex.matches(password)
     }
 

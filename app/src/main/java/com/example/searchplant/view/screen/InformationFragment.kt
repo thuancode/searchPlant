@@ -42,10 +42,7 @@ class InformationFragment : Fragment() {
         }
 
         binding.txtEdit.setOnClickListener {
-
-
             create()
-
         }
 
 
@@ -62,8 +59,6 @@ class InformationFragment : Fragment() {
         val intent = Intent(Intent.ACTION_PICK)
         intent.type = "image/*"
         startActivityForResult(intent, IMAGE_REQUEST_CODE)
-
-
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
