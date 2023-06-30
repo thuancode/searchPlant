@@ -108,7 +108,6 @@ class LoginFragment : Fragment() {
         }
     }
     private fun signInWithEmailAndPassword(email:String,pass:String) {
-//        showProgressDialog(true)
         auth.signInWithEmailAndPassword(email,pass)
             .addOnCompleteListener(requireActivity()){
                 if (it.isSuccessful) {
@@ -124,7 +123,6 @@ class LoginFragment : Fragment() {
                                         Log.d(ContentValues.TAG, "---------------------${myData.getEmail()}")
                                         if(myData.getEmail() == email)
                                         {
-//                                            showProgressDialog(false)
                                             sendPostID(myData.getPostID().toString())
                                             findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
                                         }

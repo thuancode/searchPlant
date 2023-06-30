@@ -1,23 +1,28 @@
 package com.example.searchplant.view.screen
 
 import android.app.Activity.RESULT_OK
+import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.searchplant.databinding.FragmentInformationBinding
 import com.example.searchplant.model.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.storage.FirebaseStorage
 
 
 class InformationFragment : Fragment() {
     private lateinit var db : FirebaseFirestore
     private val mAuth: FirebaseAuth = FirebaseAuth.getInstance()
     lateinit var binding: FragmentInformationBinding
+    private lateinit var postId : String
 
     companion object{
         val IMAGE_REQUEST_CODE = 100
@@ -51,6 +56,7 @@ class InformationFragment : Fragment() {
         val postID = sharedPref.getString("postID","")
         if (postID != null) {
             user(postID)
+            postId = postID
         }
         return binding.root
     }
@@ -66,7 +72,23 @@ class InformationFragment : Fragment() {
        if(requestCode == IMAGE_REQUEST_CODE && resultCode == RESULT_OK)
        {
            binding.img.setImageURI(data?.data)
+           updateImage(data?.data,postId)
        }
+    }
+
+    private fun updateImage(data: Uri?, postId: String) {
+        val progressDialog = ProgressDialog(requireContext())
+        progressDialog.setMessage("Upload Avatar ...")
+        progressDialog.setCancelable(false)
+        progressDialog.show()
+        val storageReference = FirebaseStorage.getInstance().getReference("avatar/${postId}.jpg")
+        storageReference.putFile(data!!).addOnSuccessListener {
+            Toast.makeText(requireContext(),"Successfully uploaded", Toast.LENGTH_SHORT).show()
+            if(progressDialog.isShowing) progressDialog.dismiss()
+        }.addOnFailureListener{
+            Toast.makeText(requireContext(),"Failed", Toast.LENGTH_SHORT).show()
+            if(progressDialog.isShowing) progressDialog.dismiss()
+        }
     }
 
     private fun create() {
@@ -89,15 +111,7 @@ class InformationFragment : Fragment() {
             "fullName", textTen,
             "phone", textSdt
         )
-            .addOnSuccessListener {
-                // Xử lý thành công
-            }
-
-
     }
-
-
-
 
     private fun user(textData: String) {
         db = FirebaseFirestore.getInstance()
@@ -114,25 +128,9 @@ class InformationFragment : Fragment() {
                             binding.edtSdt.setText(myData.getPhone())
                         }
                     }
-                   // val documentSnapshot = task.result
-
-//                    val ten = documentSnapshot?.data?.get("fullName").toString()
-//                    val textTen =  binding.edtName
-//                    textTen.setText(ten)
-//
-//                    val sdt = documentSnapshot?.data?.get("phone").toString()
-//                    val textSdt = binding.edtSdt
-//                    textSdt.setText(sdt)
-//
-//                    val email = documentSnapshot?.data?.get("email").toString()
-//                    val textEmail = binding.edtEmail
-//                    textEmail.setText(email)
-//
-//                    val diachi = documentSnapshot?.data?.get("address").toString()
-//                    val textDiachi = binding.edtDiachi
-//                    textDiachi.setText(diachi)
                 }
             }
+
     }
 
 

@@ -11,5 +11,6 @@
     <color name="button">#48A2F5</color>
     <color name="home">#1194AA</color>
 
+    <color name="selected_icon_color">#FF0000</color>
 
 </resources>

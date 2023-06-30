@@ -31,4 +31,7 @@
             <item name="cornerSize">20dp</item>
             <item name="color">@color/white</item>
     </style>
+    <style name="SelectedIconStyle">
+        <item name="android:tint">@color/selected_icon_color</item>
+    </style>
 </resources>
