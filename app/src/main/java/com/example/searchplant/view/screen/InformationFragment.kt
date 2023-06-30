@@ -4,6 +4,7 @@ import android.app.Activity.RESULT_OK
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
+import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -16,6 +17,7 @@ import com.example.searchplant.model.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
+import java.io.File
 
 
 class InformationFragment : Fragment() {
@@ -41,7 +43,6 @@ class InformationFragment : Fragment() {
         binding = FragmentInformationBinding.inflate(inflater, container,false)
 
 
-
         binding.camera.setOnClickListener {
             camera()
         }
@@ -49,8 +50,6 @@ class InformationFragment : Fragment() {
         binding.txtEdit.setOnClickListener {
             create()
         }
-
-
 
         val sharedPref = requireActivity().getSharedPreferences("sendPostID", Context.MODE_PRIVATE)
         val postID = sharedPref.getString("postID","")
@@ -126,6 +125,12 @@ class InformationFragment : Fragment() {
                             binding.edtDiachi.setText(myData.getAddress())
                             binding.edtEmail.setText(myData.getEmail())
                             binding.edtSdt.setText(myData.getPhone())
+                            val storageRef = FirebaseStorage.getInstance().reference.child("avatar/${myData.getPostID()}.jpg")
+                            val localFile = File.createTempFile("tempPlant","jpg")
+                            storageRef.getFile(localFile).addOnCompleteListener {myData.getFullName().toString().split(" ")
+                                val bitmap = BitmapFactory.decodeFile(localFile.absolutePath)
+                                binding.img.setImageBitmap(bitmap)
+                            }
                         }
                     }
                 }
